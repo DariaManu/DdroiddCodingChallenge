@@ -6,6 +6,7 @@ import shopping.service.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class UI {
@@ -23,6 +24,7 @@ public class UI {
         System.out.println("Type \"items\" to view all items in the catalog");
         System.out.println("Type \"exit\" to exit application");
         System.out.println("Type \"add\" to add an item to your shopping cart");
+        System.out.println("Type \"checkout\" to proceed to checkout");
         System.out.println();
     }
 
@@ -54,6 +56,17 @@ public class UI {
         System.out.println();
     }
 
+    private void checkout() {
+        System.out.println("Shopping Cart");
+        showShoppingCart();
+        Map<String, Double> totalPrices = service.checkout();
+        System.out.println("Invoice");
+        System.out.println("Subtotal: " + totalPrices.get("subtotal"));
+        System.out.println("Shipping: " + totalPrices.get("shipping"));
+        System.out.println("Total: " + totalPrices.get("total"));
+        System.out.println();
+    }
+
     public void run() {
         String command = "";
         boolean canContinue = true;
@@ -67,6 +80,9 @@ public class UI {
                     break;
                 case "add":
                     addItemToShoppingCart();
+                    break;
+                case "checkout":
+                    checkout();
                     break;
                 case "exit":
                     canContinue = false;

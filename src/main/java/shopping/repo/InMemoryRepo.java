@@ -40,4 +40,8 @@ public class InMemoryRepo {
         }
         throw new RepoException("Item doesn't exist");
     }
+
+    public ShippingRate getShippingRateForItem(Item item) {
+        return items.get(item);
+    }
 }
