@@ -48,7 +48,7 @@ public class Service {
         return totalPrices;
     }
 
-    public void clearShoppingCart() {
+    private void clearShoppingCart() {
         shoppingCart.clear();
     }
 
@@ -58,7 +58,7 @@ public class Service {
             int numberOfItems = shoppingCart.get(item);
             currentSubTotal += item.getItemPrice() * numberOfItems;
         }
-        return currentSubTotal;
+        return (double) (Math.round(currentSubTotal*100.0)/100.0);
     }
 
     private Double computeShipping() {
