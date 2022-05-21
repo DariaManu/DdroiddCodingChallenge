@@ -81,4 +81,55 @@ class ServiceTest {
             assertTrue(true);
         }
     }
+
+    @Test
+    void applySpecialOfferForKeyboards() {
+        Double discount = 0.0;
+        try {
+            service.addItemToShoppingCart("Keyboard");
+            discount = service.applySpecialOfferForKeyboards();
+            assertEquals(discount, 4.09);
+            service.addItemToShoppingCart("Keyboard");
+            discount = service.applySpecialOfferForKeyboards();
+            assertEquals(discount, 8.18);
+            service.addItemToShoppingCart("Keyboard");
+            discount = service.applySpecialOfferForKeyboards();
+            assertEquals(discount, 12.27);
+        } catch (RepoException exception) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    void applySpecialOfferFor2Monitors() {
+        Double discount = 0.0;
+        try {
+            service.addItemToShoppingCart("Keyboard");
+            service.addItemToShoppingCart("Monitor");
+            service.addItemToShoppingCart("Monitor");
+            service.addItemToShoppingCart("Desk Lamp");
+            discount = service.applySpecialOfferFor2Monitors();
+            assertEquals(discount, 44.99);
+        } catch (RepoException exception) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    void applySpecialOfferFor2ItemsOrMore() {
+        Double discount = 0.0;
+        try {
+            service.addItemToShoppingCart("Keyboard");
+            discount = service.applySpecialOfferFor2ItemsOrMore();
+            assertEquals(discount, 0.0);
+            service.addItemToShoppingCart("Monitor");
+            discount = service.applySpecialOfferFor2ItemsOrMore();
+            assertEquals(discount, 10.0);
+            service.addItemToShoppingCart("Desk Lamp");
+            discount = service.applySpecialOfferFor2ItemsOrMore();
+            assertEquals(discount, 10.0);
+        } catch (RepoException exception) {
+            assertTrue(true);
+        }
+    }
 }

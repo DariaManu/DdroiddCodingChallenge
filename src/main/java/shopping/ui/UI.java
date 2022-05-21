@@ -37,6 +37,8 @@ public class UI {
     }
 
     private void addItemToShoppingCart() {
+        System.out.println("---Special offers---");
+        System.out.println("10% off keyboards\t50% off one desk lamp if you buy 2 monitors\t$10 off shipping when at least 2 items bought");
         System.out.print("\tType the name of the item: ");
         String itemName = scanner.nextLine();
         try {
@@ -67,6 +69,29 @@ public class UI {
         System.out.println();
     }
 
+    private void checkoutWithSpecialOffers() {
+        System.out.println("Shopping Cart");
+        showShoppingCart();
+        Map<String, Double> totalPrices = service.checkoutWithSpecialOffers();
+        System.out.println("Invoice");
+        System.out.println("Subtotal: " + totalPrices.get("subtotal"));
+        System.out.println("Shipping: " + totalPrices.get("shipping"));
+        System.out.println();
+        System.out.println("Discounts:");
+        if (totalPrices.containsKey("discount keyboard")) {
+            System.out.println("10% off keyboards: -$" + totalPrices.get("discount keyboard"));
+        }
+        if (totalPrices.containsKey("discount desk lamp")) {
+            System.out.println("50% off one desk lamp: -$" + totalPrices.get("discount desk lamp"));
+        }
+        if (totalPrices.containsKey("discount shipping")) {
+            System.out.println("$10 off shipping: -$" + totalPrices.get("discount shipping"));
+        }
+        System.out.println();
+        System.out.println("Total: " + totalPrices.get("total"));
+        System.out.println();
+    }
+
     public void run() {
         String command = "";
         boolean canContinue = true;
@@ -82,7 +107,7 @@ public class UI {
                     addItemToShoppingCart();
                     break;
                 case "checkout":
-                    checkout();
+                    checkoutWithSpecialOffers();
                     break;
                 case "exit":
                     canContinue = false;

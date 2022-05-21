@@ -28,13 +28,13 @@ public class InMemoryRepo {
 
     public List<Item> getAllItems() {
         List<Item> availableItems = new ArrayList<>();
-        for(Item item: items.keySet())
+        for (Item item: items.keySet())
             availableItems.add(item);
         return availableItems;
     }
 
     public Item getItemByItemName(String itemName) throws RepoException{
-        for(Item item: items.keySet()) {
+        for (Item item: items.keySet()) {
             if (item.getItemName().equals(itemName))
                 return item;
         }
@@ -43,5 +43,14 @@ public class InMemoryRepo {
 
     public ShippingRate getShippingRateForItem(Item item) {
         return items.get(item);
+    }
+
+    public List<ShippingRate> getAllShippingRates() {
+        List<ShippingRate> shippingRates = new ArrayList<>();
+        for (ShippingRate shippingRate: items.values()) {
+            if (!shippingRates.contains(shippingRate))
+                shippingRates.add(shippingRate);
+        }
+        return shippingRates;
     }
 }
