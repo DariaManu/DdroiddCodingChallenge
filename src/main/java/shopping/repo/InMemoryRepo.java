@@ -3,6 +3,7 @@ package shopping.repo;
 import shopping.model.Item;
 import shopping.model.ShippingCountry;
 import shopping.model.ShippingRate;
+import shopping.service.RepoException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,5 +31,13 @@ public class InMemoryRepo {
         for(Item item: items.keySet())
             availableItems.add(item);
         return availableItems;
+    }
+
+    public Item getItemByItemName(String itemName) throws RepoException{
+        for(Item item: items.keySet()) {
+            if (item.getItemName().equals(itemName))
+                return item;
+        }
+        throw new RepoException("Item doesn't exist");
     }
 }
