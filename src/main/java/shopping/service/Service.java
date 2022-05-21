@@ -22,10 +22,19 @@ public class Service {
         shoppingCart = new HashMap<>();
     }
 
+    /**
+     *
+     * @return list containing all the items in the catalog
+     */
     public List<Item> getAllItems() {
         return repo.getAllItems();
     }
 
+    /**
+     * add an Item to the shopping cart, or increase its quantity if it already exists
+     * @param itemName - name of the item that is searched in the catalog
+     * @throws RepoException if there is no item in the catalog with the given name
+     */
     public void addItemToShoppingCart(String itemName) throws RepoException{
         Item item = repo.getItemByItemName(itemName);
         if (shoppingCart.containsKey(item))
@@ -34,10 +43,18 @@ public class Service {
             shoppingCart.put(item, 1);
     }
 
+    /**
+     *
+     * @return the contents of the user's shopping cart (items and their quantities)
+     */
     public HashMap<Item, Integer> getShoppingCart() {
         return shoppingCart;
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, Double> checkout() {
         Map<String, Double> totalPrices = new HashMap<>();
         Double subtotal = computeSubtotal();
@@ -50,6 +67,10 @@ public class Service {
         return totalPrices;
     }
 
+    /**
+     * compute the values required to get the total price of the shopping cart
+     * @return a map containing the details of the invoice for the customer's order (subtotal, shipping, vat, discounts, total)
+     */
     public Map<String, Double> checkoutWithSpecialOffersAndVAT() {
         Map<String, Double> totalPrices = new HashMap<>();
         Double subtotal = computeSubtotal();
@@ -74,6 +95,10 @@ public class Service {
         return totalPrices;
     }
 
+    /**
+     * apply a KEYBOARD_DISCOUNT to the price of every keyboard in the shopping cart
+     * @return the discount obtained
+     */
     public Double applySpecialOfferForKeyboards() {
         Double discount = 0.0;
         Optional<Item> keyboardItemOptional = shoppingCart.keySet().stream().filter(item -> item.getItemName().equals("Keyboard")).findFirst();
@@ -88,6 +113,10 @@ public class Service {
         return discount;
     }
 
+    /**
+     * apply a DESK_LAMP_DISCOUNT to the price of a lamp desk if there are at least 2 monitors in the shopping cart
+     * @return the discount obtained
+     */
     public Double applySpecialOfferFor2Monitors() {
         Double discount = 0.0;
         Optional<Item> monitorItemOptional = shoppingCart.keySet().stream().filter(item -> item.getItemName().equals("Monitor")).findFirst();
@@ -104,6 +133,10 @@ public class Service {
         return discount;
     }
 
+    /**
+     * apply a SHIPPING_DISCOUNT if there are at least 2 items in the shopping cart
+     * @return the discount obtained
+     */
     public Double applySpecialOfferFor2ItemsOrMore() {
         Double discount = 0.0;
         int numberOfItemsOrdered = shoppingCart.values().stream().reduce(0, Integer::sum);
@@ -112,15 +145,27 @@ public class Service {
         return discount;
     }
 
+    /**
+     * apply a VAT to the subtotal of the shopping cart
+     * @param subtotal - the subtotal of the shopping cart before any discounts are applied
+     * @return the value of the vat
+     */
     public Double applyVAT(Double subtotal) {
         Double vat = VAT * subtotal;
         return roundDoubleValueTo2Decimals(vat);
     }
 
+    /**
+     * remove all items in the shopping cart
+     */
     private void clearShoppingCart() {
         shoppingCart.clear();
     }
 
+    /**
+     * compute the subtotal of the shopping cart
+     * @return the subtotal value of the shopping cart
+     */
     private Double computeSubtotal() {
         Double currentSubTotal = 0.0d;
         for (Item item: shoppingCart.keySet()) {
@@ -130,6 +175,10 @@ public class Service {
         return (double) (Math.round(currentSubTotal*100.0)/100.0);
     }
 
+    /**
+     * compute the shipping for the items in the shopping cart based on their respective shipping rates
+     * @return the shipping value for the items
+     */
     private Double computeShipping() {
         Double currentShipping = 0.0d;
         for (Item item: shoppingCart.keySet()) {
@@ -140,6 +189,11 @@ public class Service {
         return currentShipping;
     }
 
+    /**
+     * transform a decimal number so that is has only 2 values after the decimal point
+     * @param value - a decimal number
+     * @return transformed value
+     */
     private Double roundDoubleValueTo2Decimals(Double value) {
         return (double) (Math.floor(value * 100.0) / 100.0);
     }

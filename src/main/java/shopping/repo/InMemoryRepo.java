@@ -8,15 +8,19 @@ import shopping.service.RepoException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryRepo {
-    private HashMap<Item, ShippingRate> items;
+    private Map<Item, ShippingRate> items;
 
     public InMemoryRepo() {
         items = new HashMap<>();
         loadItems();
     }
 
+    /**
+     * add the catalog of items and their respective shipping rates to items map
+     */
     private void loadItems() {
         items.put(new Item("Mouse", 10.99d, ShippingCountry.RO, 0.2d), new ShippingRate(ShippingCountry.RO, 1));
         items.put(new Item("Keyboard", 40.99d, ShippingCountry.UK, 0.7d), new ShippingRate(ShippingCountry.UK, 2));
@@ -26,6 +30,10 @@ public class InMemoryRepo {
         items.put(new Item("Desk Lamp", 89.99d, ShippingCountry.UK, 1.3d), new ShippingRate(ShippingCountry.UK, 2));
     }
 
+    /**
+     *
+     * @return list containing all the items in the catalog
+     */
     public List<Item> getAllItems() {
         List<Item> availableItems = new ArrayList<>();
         for (Item item: items.keySet())
@@ -33,6 +41,12 @@ public class InMemoryRepo {
         return availableItems;
     }
 
+    /**
+     *
+     * @param itemName - name of the item that is searched in the catalog
+     * @return the item in the catalog with name equal to itemName
+     * @throws RepoException if there is no item in the catalog with the given name
+     */
     public Item getItemByItemName(String itemName) throws RepoException{
         for (Item item: items.keySet()) {
             if (item.getItemName().equals(itemName))
@@ -41,16 +55,12 @@ public class InMemoryRepo {
         throw new RepoException("Item doesn't exist");
     }
 
+    /**
+     *
+     * @param item - the item whose shipping rate is requested
+     * @return the shipping rate corresponding to the given item
+     */
     public ShippingRate getShippingRateForItem(Item item) {
         return items.get(item);
-    }
-
-    public List<ShippingRate> getAllShippingRates() {
-        List<ShippingRate> shippingRates = new ArrayList<>();
-        for (ShippingRate shippingRate: items.values()) {
-            if (!shippingRates.contains(shippingRate))
-                shippingRates.add(shippingRate);
-        }
-        return shippingRates;
     }
 }

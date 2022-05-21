@@ -1,7 +1,5 @@
 package shopping;
 
-import shopping.model.Item;
-import shopping.model.ShippingRate;
 import shopping.repo.InMemoryRepo;
 import shopping.service.Service;
 import shopping.ui.UI;
