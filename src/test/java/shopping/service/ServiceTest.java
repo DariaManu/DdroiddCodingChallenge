@@ -132,4 +132,20 @@ class ServiceTest {
             assertTrue(true);
         }
     }
+
+    @Test
+    void applyVAT() {
+        Map<String, Double> totalPrices = new HashMap<>();
+        Double vat = 0.0;
+        try {
+            service.addItemToShoppingCart("Keyboard");
+            service.addItemToShoppingCart("Monitor");
+            service.addItemToShoppingCart("Monitor");
+            totalPrices = service.checkout();
+            vat = service.applyVAT(totalPrices.get("subtotal"));
+            assertEquals(vat, 70.48);
+        } catch (RepoException exception) {
+            assertTrue(true);
+        }
+    }
 }

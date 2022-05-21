@@ -38,7 +38,7 @@ public class UI {
 
     private void addItemToShoppingCart() {
         System.out.println("---Special offers---");
-        System.out.println("10% off keyboards\t50% off one desk lamp if you buy 2 monitors\t$10 off shipping when at least 2 items bought");
+        System.out.println("10% off keyboards  |  50% off one desk lamp if you buy 2 monitors  |  $10 off shipping when at least 2 items bought");
         System.out.print("\tType the name of the item: ");
         String itemName = scanner.nextLine();
         try {
@@ -69,13 +69,14 @@ public class UI {
         System.out.println();
     }
 
-    private void checkoutWithSpecialOffers() {
+    private void checkoutWithSpecialOffersAndVAT() {
         System.out.println("Shopping Cart");
         showShoppingCart();
-        Map<String, Double> totalPrices = service.checkoutWithSpecialOffers();
+        Map<String, Double> totalPrices = service.checkoutWithSpecialOffersAndVAT();
         System.out.println("Invoice");
         System.out.println("Subtotal: " + totalPrices.get("subtotal"));
         System.out.println("Shipping: " + totalPrices.get("shipping"));
+        System.out.println("VAT: " + totalPrices.get("vat"));
         System.out.println();
         System.out.println("Discounts:");
         if (totalPrices.containsKey("discount keyboard")) {
@@ -107,7 +108,7 @@ public class UI {
                     addItemToShoppingCart();
                     break;
                 case "checkout":
-                    checkoutWithSpecialOffers();
+                    checkoutWithSpecialOffersAndVAT();
                     break;
                 case "exit":
                     canContinue = false;

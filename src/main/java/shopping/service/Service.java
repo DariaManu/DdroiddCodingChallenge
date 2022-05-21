@@ -12,6 +12,10 @@ public class Service {
     private HashMap<Item, Integer> shoppingCart;
 
     private static double SHIPPING_RATE_PER_KG = 0.1;
+    private static double KEYBOARD_DISCOUNT = 0.1;
+    private static double DESK_LAMP_DISCOUNT = 0.5;
+    private static double SHIPPING_DISCOUNT = 10.0;
+    private static double VAT = 0.19;
 
     public Service(InMemoryRepo repo) {
         this.repo = repo;
@@ -46,10 +50,12 @@ public class Service {
         return totalPrices;
     }
 
-    public Map<String, Double> checkoutWithSpecialOffers() {
+    public Map<String, Double> checkoutWithSpecialOffersAndVAT() {
         Map<String, Double> totalPrices = new HashMap<>();
         Double subtotal = computeSubtotal();
         totalPrices.put("subtotal", subtotal);
+        Double vat = applyVAT(subtotal);
+        totalPrices.put("vat", vat);
         Double shipping = computeShipping();
         totalPrices.put("shipping", shipping);
         Double discountKeyboards = applySpecialOfferForKeyboards();
@@ -61,9 +67,10 @@ public class Service {
         Double discountShipping = applySpecialOfferFor2ItemsOrMore();
         if (discountShipping != 0.0)
             totalPrices.put("discount shipping", discountShipping);
-        Double total = subtotal + shipping - discountKeyboards - discountDeskLamp - discountShipping;
+        Double total = subtotal + vat + shipping - discountKeyboards - discountDeskLamp - discountShipping;
         total = roundDoubleValueTo2Decimals(total);
         totalPrices.put("total", total);
+        clearShoppingCart();
         return totalPrices;
     }
 
@@ -74,7 +81,7 @@ public class Service {
             Item keyboardItem = keyboardItemOptional.get();
             int numberOfKeyboards = shoppingCart.get(keyboardItem);
             for (int i = 0; i < numberOfKeyboards; i++) {
-                Double reducedValue = 0.1 * keyboardItem.getItemPrice();
+                Double reducedValue = KEYBOARD_DISCOUNT * keyboardItem.getItemPrice();
                 discount += roundDoubleValueTo2Decimals(reducedValue);
             }
         }
@@ -89,8 +96,8 @@ public class Service {
             if (shoppingCart.get(monitorItem) >= 2) {
                 Optional<Item> deskLampOptional = shoppingCart.keySet().stream().filter(item -> item.getItemName().equals("Desk Lamp")).findFirst();
                 if (deskLampOptional.isPresent()) {
-                    Double halfPriceForLamp = deskLampOptional.get().getItemPrice() / 2;
-                    discount += roundDoubleValueTo2Decimals(halfPriceForLamp);
+                    Double reducedPriceForLamp = deskLampOptional.get().getItemPrice() * DESK_LAMP_DISCOUNT;
+                    discount += roundDoubleValueTo2Decimals(reducedPriceForLamp);
                 }
             }
         }
@@ -101,8 +108,13 @@ public class Service {
         Double discount = 0.0;
         int numberOfItemsOrdered = shoppingCart.values().stream().reduce(0, Integer::sum);
         if (numberOfItemsOrdered >= 2)
-            discount = 10.0;
+            discount = SHIPPING_DISCOUNT;
         return discount;
+    }
+
+    public Double applyVAT(Double subtotal) {
+        Double vat = VAT * subtotal;
+        return roundDoubleValueTo2Decimals(vat);
     }
 
     private void clearShoppingCart() {
