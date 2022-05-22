@@ -16,18 +16,18 @@ and displays the results of the commands
 ## How to run the program
 In order to start the application, run the <i>main</i> method in class Main<br>
 <br>
-After starting, the program displays the available commands.
-![](./images/ddcc1.png)
-In order to view the products in the catalog type "items".
-![](./images/ddcc2.png)
-In order to add a new product to the shopping cart first type "add".
-![](.images/ddcc3.png)
+After starting, the program displays the available commands.<br>
+![](./images/ddcc1.png)<br>
+In order to view the products in the catalog type "items".<br>
+![](./images/ddcc2.png)<br>
+In order to add a new product to the shopping cart first type "add".<br>
+![](.images/ddcc3.png)<br>
 (in this step, the available offers will also be displayed)<br>
 Then, type the name of the product as it appears in the catalog.<br>
-The added product will appear in the shopping cart.
-![](./images/ddcc4.png)
-Repeat this step until you have added all the wanted products in the shopping cart.
-![](./images/ddcc5.png)
-To check out and see the final invoice with all the details type "checkout"
-![](./images/ddcc6.png)
-To exit the program type "exit"
+The added product will appear in the shopping cart.<br>
+![](./images/ddcc4.png)<br>
+Repeat this step until you have added all the wanted products in the shopping cart.<br>
+![](./images/ddcc5.png)<br>
+To check out and see the final invoice with all the details type "checkout".<br>
+![](./images/ddcc6.png)<br>
+To exit the program type "exit".
