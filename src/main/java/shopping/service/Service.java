@@ -52,30 +52,14 @@ public class Service {
     }
 
     /**
-     *
-     * @return
-     */
-    public Map<String, Double> checkout() {
-        Map<String, Double> totalPrices = new HashMap<>();
-        Double subtotal = computeSubtotal();
-        Double shipping = computeShipping();
-        Double total = subtotal + shipping;
-        totalPrices.put("subtotal", subtotal);
-        totalPrices.put("shipping", shipping);
-        totalPrices.put("total", total);
-        clearShoppingCart();
-        return totalPrices;
-    }
-
-    /**
-     * compute the values required to get the total price of the shopping cart
+     * compute the values required to get the total price of the shopping cart then empty the shopping cart
      * @return a map containing the details of the invoice for the customer's order (subtotal, shipping, vat, discounts, total)
      */
     public Map<String, Double> checkoutWithSpecialOffersAndVAT() {
         Map<String, Double> totalPrices = new HashMap<>();
         Double subtotal = computeSubtotal();
         totalPrices.put("subtotal", subtotal);
-        Double vat = applyVAT(subtotal);
+        Double vat = applyVAT();
         totalPrices.put("vat", vat);
         Double shipping = computeShipping();
         totalPrices.put("shipping", shipping);
@@ -146,13 +130,19 @@ public class Service {
     }
 
     /**
-     * apply a VAT to the subtotal of the shopping cart
-     * @param subtotal - the subtotal of the shopping cart before any discounts are applied
-     * @return the value of the vat
+     * apply a VAT rate to the price of each item in the shopping cart
+     * @return the total of the vat after applying the rate to every item in the shopping cart
      */
-    public Double applyVAT(Double subtotal) {
-        Double vat = VAT * subtotal;
-        return roundDoubleValueTo2Decimals(vat);
+    public Double applyVAT() {
+        Double totalVat = 0.0;
+        for (Item item: shoppingCart.keySet()) {
+            int numberOfCurrentItems = shoppingCart.get(item);
+            Double currentVat = item.getItemPrice() * VAT;
+            currentVat = roundDoubleValueTo2Decimals(currentVat);
+            currentVat = currentVat * numberOfCurrentItems;
+            totalVat += currentVat;
+        }
+        return roundDoubleValueTo2Decimals(totalVat);
     }
 
     /**

@@ -71,32 +71,18 @@ public class UI {
     }
 
     /**
-     *
-     */
-    private void checkout() {
-        System.out.println("Shopping Cart");
-        showShoppingCart();
-        Map<String, Double> totalPrices = service.checkout();
-        System.out.println("Invoice");
-        System.out.println("Subtotal: " + totalPrices.get("subtotal"));
-        System.out.println("Shipping: " + totalPrices.get("shipping"));
-        System.out.println("Total: " + totalPrices.get("total"));
-        System.out.println();
-    }
-
-    /**
      * display the shopping cart and the invoice details for the order
      */
     private void checkoutWithSpecialOffersAndVAT() {
-        System.out.println("Shopping Cart");
+        System.out.println("---Shopping Cart---");
         showShoppingCart();
         Map<String, Double> totalPrices = service.checkoutWithSpecialOffersAndVAT();
-        System.out.println("Invoice");
+        System.out.println("---Invoice---");
         System.out.println("Subtotal: " + totalPrices.get("subtotal"));
         System.out.println("Shipping: " + totalPrices.get("shipping"));
         System.out.println("VAT: " + totalPrices.get("vat"));
         System.out.println();
-        System.out.println("Discounts:");
+        System.out.println("---Discounts---");
         if (totalPrices.containsKey("discount keyboard")) {
             System.out.println("10% off keyboards: -$" + totalPrices.get("discount keyboard"));
         }
