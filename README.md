@@ -21,7 +21,7 @@ After starting, the program displays the available commands.<br>
 In order to view the products in the catalog type "items".<br>
 ![](./images/ddcc2.png)<br>
 In order to add a new product to the shopping cart first type "add".<br>
-![](.images/ddcc3.png)<br>
+![](./images/ddcc3.png)<br>
 (in this step, the available offers will also be displayed)<br>
 Then, type the name of the product as it appears in the catalog.<br>
 The added product will appear in the shopping cart.<br>
