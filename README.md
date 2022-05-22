@@ -17,17 +17,17 @@ and displays the results of the commands
 In order to start the application, run the <i>main</i> method in class Main<br>
 <br>
 After starting, the program displays the available commands.
-<img src="C:\Users\User\Desktop\Daria\Proiecte\ddcc1.png"/>
+![](C:\Users\User\Desktop\Daria\Proiecte\DdroiddCodingChallenge\images\ddcc1.png)
 In order to view the products in the catalog type "items".
-<img src="C:\Users\User\Desktop\Daria\Proiecte\ddcc2.png"/>
+![](C:\Users\User\Desktop\Daria\Proiecte\DdroiddCodingChallenge\images\ddcc2.png)
 In order to add a new product to the shopping cart first type "add".
-<img src="C:\Users\User\Desktop\Daria\Proiecte\ddcc3.png"/>
+![](C:\Users\User\Desktop\Daria\Proiecte\DdroiddCodingChallenge\images\ddcc3.png)
 (in this step, the available offers will also be displayed)<br>
 Then, type the name of the product as it appears in the catalog.<br>
 The added product will appear in the shopping cart.
-<img src="C:\Users\User\Desktop\Daria\Proiecte\ddcc4.png"/>
+![](C:\Users\User\Desktop\Daria\Proiecte\DdroiddCodingChallenge\images\ddcc4.png)
 Repeat this step until you have added all the wanted products in the shopping cart.
-<img src="C:\Users\User\Desktop\Daria\Proiecte\ddcc5.png"/>
+![](C:\Users\User\Desktop\Daria\Proiecte\DdroiddCodingChallenge\images\ddcc5.png)
 To check out and see the final invoice with all the details type "checkout"
-<img src="C:\Users\User\Desktop\Daria\Proiecte\ddcc6.png"/>
+![](C:\Users\User\Desktop\Daria\Proiecte\DdroiddCodingChallenge\images\ddcc6.png)
 To exit the program type "exit"
