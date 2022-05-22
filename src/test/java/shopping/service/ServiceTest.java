@@ -22,21 +22,22 @@ class ServiceTest {
     }
 
     @Test
-    @DisplayName("checkout() test")
-    void checkout() {
+    @DisplayName("checkoutWithSpecialOffersAndVAT() test")
+    void checkoutWithSpecialOffersAndVAT() {
         Map<String, Double> totalPrices = new HashMap<>();
 
-        totalPrices = service.checkout();
+        totalPrices = service.checkoutWithSpecialOffersAndVAT();
         assertEquals(totalPrices.get("subtotal"), 0.0);
         assertEquals(totalPrices.get("shipping"), 0.0);
         assertEquals(totalPrices.get("total"), 0.0);
 
         try {
             service.addItemToShoppingCart("Monitor");
-            totalPrices = service.checkout();
+            totalPrices = service.checkoutWithSpecialOffersAndVAT();
             assertEquals(totalPrices.get("subtotal"), 164.99);
             assertEquals(totalPrices.get("shipping"), 57.00);
-            assertEquals(totalPrices.get("total"), 221.99);
+            assertEquals(totalPrices.get("vat"), 31.34);
+            assertEquals(totalPrices.get("total"), 253.33);
         } catch (RepoException exception) {
             assertTrue(true);
         }
@@ -45,10 +46,12 @@ class ServiceTest {
             service.addItemToShoppingCart("Mouse");
             service.addItemToShoppingCart("Monitor");
             service.addItemToShoppingCart("Monitor");
-            totalPrices = service.checkout();
+            totalPrices = service.checkoutWithSpecialOffersAndVAT();
             assertEquals(totalPrices.get("subtotal"), 340.97);
             assertEquals(totalPrices.get("shipping"), 116.0);
-            assertEquals(totalPrices.get("total"), 456.97);
+            assertEquals(totalPrices.get("vat"), 64.76);
+            assertEquals(totalPrices.get("discount shipping"), 10.0);
+            assertEquals(totalPrices.get("total"), 511.73);
         } catch (RepoException exception) {
             assertTrue(true);
         }
@@ -60,10 +63,13 @@ class ServiceTest {
             service.addItemToShoppingCart("Webcam");
             service.addItemToShoppingCart("Headphones");
             service.addItemToShoppingCart("Desk Lamp");
-            totalPrices = service.checkout();
+            totalPrices = service.checkoutWithSpecialOffersAndVAT();
             assertEquals(totalPrices.get("subtotal"), 451.94);
             assertEquals(totalPrices.get("shipping"), 119.0);
-            assertEquals(totalPrices.get("total"), 570.94);
+            assertEquals(totalPrices.get("vat"), 85.82);
+            assertEquals(totalPrices.get("discount keyboard"), 4.09);
+            assertEquals(totalPrices.get("discount shipping"), 10.0);
+            assertEquals(totalPrices.get("total"), 642.66);
         } catch (RepoException exception) {
             assertTrue(true);
         }
@@ -73,10 +79,28 @@ class ServiceTest {
             service.addItemToShoppingCart("Headphones");
             service.addItemToShoppingCart("Headphones");
             service.addItemToShoppingCart("Desk Lamp");
-            totalPrices = service.checkout();
+            totalPrices = service.checkoutWithSpecialOffersAndVAT();
             assertEquals(totalPrices.get("subtotal"), 294.96);
             assertEquals(totalPrices.get("shipping"), 64.0);
-            assertEquals(totalPrices.get("total"), 358.96);
+            assertEquals(totalPrices.get("vat"), 56.01);
+            assertEquals(totalPrices.get("discount shipping"), 10.0);
+            assertEquals(totalPrices.get("total"), 404.97);
+        } catch (RepoException exception) {
+            assertTrue(true);
+        }
+
+        try {
+            service.addItemToShoppingCart("Webcam");
+            service.addItemToShoppingCart("Monitor");
+            service.addItemToShoppingCart("Monitor");
+            service.addItemToShoppingCart("Desk Lamp");
+            totalPrices = service.checkoutWithSpecialOffersAndVAT();
+            assertEquals(totalPrices.get("subtotal"), 504.96);
+            assertEquals(totalPrices.get("shipping"), 142.0);
+            assertEquals(totalPrices.get("vat"), 95.91);
+            assertEquals(totalPrices.get("discount shipping"), 10.0);
+            assertEquals(totalPrices.get("discount desk lamp"), 44.99);
+            assertEquals(totalPrices.get("total"), 687.88);
         } catch (RepoException exception) {
             assertTrue(true);
         }
@@ -135,15 +159,13 @@ class ServiceTest {
 
     @Test
     void applyVAT() {
-        Map<String, Double> totalPrices = new HashMap<>();
         Double vat = 0.0;
         try {
             service.addItemToShoppingCart("Keyboard");
             service.addItemToShoppingCart("Monitor");
             service.addItemToShoppingCart("Monitor");
-            totalPrices = service.checkout();
-            vat = service.applyVAT(totalPrices.get("subtotal"));
-            assertEquals(vat, 70.48);
+            vat = service.applyVAT();
+            assertEquals(vat, 70.45);
         } catch (RepoException exception) {
             assertTrue(true);
         }
