@@ -3,7 +3,6 @@ package shopping.repo;
 import shopping.model.Item;
 import shopping.model.ShippingCountry;
 import shopping.model.ShippingRate;
-import shopping.service.RepoException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

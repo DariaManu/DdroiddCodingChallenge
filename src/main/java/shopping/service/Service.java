@@ -3,13 +3,14 @@ package shopping.service;
 import shopping.model.Item;
 import shopping.model.ShippingRate;
 import shopping.repo.InMemoryRepo;
+import shopping.repo.RepoException;
 
 import java.util.*;
 
 public class Service {
     private InMemoryRepo repo;
 
-    private HashMap<Item, Integer> shoppingCart;
+    private Map<Item, Integer> shoppingCart;
 
     private static double SHIPPING_RATE_PER_KG = 0.1;
     private static double KEYBOARD_DISCOUNT = 0.1;
@@ -47,7 +48,7 @@ public class Service {
      *
      * @return the contents of the user's shopping cart (items and their quantities)
      */
-    public HashMap<Item, Integer> getShoppingCart() {
+    public Map<Item, Integer> getShoppingCart() {
         return shoppingCart;
     }
 

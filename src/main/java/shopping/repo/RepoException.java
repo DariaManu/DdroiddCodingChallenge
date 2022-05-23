@@ -1,4 +1,4 @@
-package shopping.service;
+package shopping.repo;
 
 public class RepoException extends Exception{
     public RepoException(){

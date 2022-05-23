@@ -1,10 +1,9 @@
 package shopping.ui;
 
 import shopping.model.Item;
-import shopping.service.RepoException;
+import shopping.repo.RepoException;
 import shopping.service.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -13,7 +12,7 @@ public class UI {
     private Service service;
     private Scanner scanner = new Scanner(System.in);
 
-    private static String DISPLAY_ITEMS_FORMAT = "%s - $ %s";
+    private static String DISPLAY_ITEMS_FORMAT = "%s - $%s";
     private static String DISPLAY_SHOPPING_CART_FORMAT = "%s x %d";
 
     public UI(Service service) {
@@ -62,7 +61,7 @@ public class UI {
      * display all the items already added in the shopping cart
      */
     private void showShoppingCart() {
-        HashMap<Item, Integer> shoppingCart = service.getShoppingCart();
+        Map<Item, Integer> shoppingCart = service.getShoppingCart();
         for(Item item: shoppingCart.keySet()) {
             Integer numberOfItems = shoppingCart.get(item);
             System.out.println(String.format(DISPLAY_SHOPPING_CART_FORMAT, item.getItemName(), numberOfItems));

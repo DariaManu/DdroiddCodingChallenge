@@ -8,8 +8,8 @@ a product in the catalog, ShippingRate contains details about the shipping rates
 to each country that ships products);
 - <i><b>repo</b></i> package includes InMemoryRepo class that manages access to the data
 structure containing the catalog of products and their corresponding shipping rates;
-- <i><b>service</b></i> package includes Service class which use the persistence layer and
-implement the business rules of the application;
+- <i><b>service</b></i> package includes Service class which uses the persistence layer and
+implements the business rules of the application;
 - <i><b>ui</b></i> package includes UI class which manages the input commands from the user
 and displays the results of the commands
 
